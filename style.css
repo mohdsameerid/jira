@@ -57,3 +57,63 @@ body{
     font-size: 2rem;
     color: white;
 }
+
+.modal-cont{
+    height: 50vh;
+    background-color: lightblue;
+    width: 45vw;
+    display: none;
+    position: absolute;
+    top: calc((100vh - 50vh)/2);
+    left: calc((100vw - 45vw)/2);
+}
+
+.textarea-cont{
+    width: 75%;
+    height:100%;
+    background-color: #dfe4ea;
+    border: none;
+    resize: none;
+    font-size: 2.5rem;
+    outline: none;
+}
+
+.priority-color-cont{
+    width: 25%;
+    height: 100%;
+    background-color: #4b4b4b;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+
+.priority-color-cont>div{
+
+    height: 10%;
+    width: 40%;
+
+ }
+
+ .ticket-cont{
+    height:12rem;
+    width:15rem;
+    background-color:#f1f2f6;
+ }
+
+ .ticket-color{
+    height:1rem;
+ }
+
+ .ticket-id{
+    height: 2rem;
+    background-color: red;
+ }
+
+ .task-area{
+    height: calc(100% - 1rem - 2rem );
+    font-size :1.5rem;
+    overflow-wrap: break-word;
+ }
+
+ 
