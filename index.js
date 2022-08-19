@@ -71,3 +71,13 @@ mainCont.appendChild(ticketCont);
 
   
 }
+
+
+
+//getting data from localStorage, for re rendering of tickets
+if (localStorage.getItem("tickets")) {
+    ticketsArr = JSON.parse(localStorage.getItem("tickets"));
+    ticketsArr.forEach(ticketObj => {
+      createTicket(ticketObj.ticketColor, ticketObj.ticketTask, ticketObj.ticketId)
+    })
+  }
