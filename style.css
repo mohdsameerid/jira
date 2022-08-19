@@ -116,4 +116,13 @@ body{
     overflow-wrap: break-word;
  }
 
+ .main-cont{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+
+ }
+
  
