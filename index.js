@@ -99,3 +99,36 @@ allPriorityColor.forEach(colorElement=>{
     // console.log(colorElement.classList[0]);
   })
 });
+
+
+
+
+let toolBoxColors = document.querySelectorAll(".toolbox-color-cont>*");
+// getting Tickets by single and double click
+for (let i = 0; i < toolBoxColors.length; i++) {
+  // geting tickets on the basis of ticketColor (single click)
+  toolBoxColors[i].addEventListener("click", function () {
+    let currColor = toolBoxColors[i].classList[0];
+    let filteredTickets = ticketsArr.filter(ticketObj => ticketObj.ticketColor == currColor);
+    // console.log(filteredTickets);
+
+    // remove all tickets
+    let allTickets = document.querySelectorAll(".ticket-cont");
+    allTickets.forEach(ticket => ticket.remove());
+
+    //display filtered tickets 
+    filteredTickets.forEach(ticket => 
+      createTicket(ticket.ticketColor, ticket.ticketTask, ticket.ticketId));
+  })
+
+  // display all ticket by double click
+  toolBoxColors[i].addEventListener("dblclick", function(){
+    
+    //remove all ticket in UI
+    let alltickets = document.querySelectorAll(".ticket-cont");
+    alltickets.forEach((tickets) => tickets.remove());
+    
+    // diplay all tickets
+    ticketsArr.forEach((ticket) => createTicket(ticket.ticketColor, ticket.ticketTask, ticket.ticketId))
+  })
+}
