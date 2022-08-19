@@ -245,3 +245,6 @@ function handlePriorityColor(ticketCont, id){
       localStorage.setItem("tickets", JSON.stringify(ticketsArr));
     });
   }  
+
+
+  
