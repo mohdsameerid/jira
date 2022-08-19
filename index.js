@@ -21,3 +21,53 @@ addBtn.addEventListener("click", function () {
 
   isModalPresent = !isModalPresent;
 });
+
+
+
+const colors = ["lightpink","lightgreen","lightblue","black"];
+let modalPriorityColors = colors[colors.length-1]; //black
+const textArea = document.querySelector(".textarea-cont");
+const mainCont = document.querySelector(".main-cont");
+var uid = new ShortUniqueId();
+let ticketsArr = [];
+// (2) Make Ticket
+modalCont.addEventListener("keypress", function(e){
+  if(e.key == "Enter"){
+    console.log(e);
+    // 1) call createTicket()
+    createTicket(modalPriorityColors, textArea.value);
+    // 2) alter display and update isModalPresent
+    modalCont.style.display = "none";
+    isModalPresent = false;
+    // 3) text area empty for the next time
+    textArea.value = "";
+  }
+});
+function createTicket(ticketColor, data, ticketId){
+  // generate uid
+  let id = ticketId || uid();
+  let ticketCont = document.createElement("div");
+
+  ticketCont.setAttribute("class", "ticket-cont");
+  ticketCont.innerHTML = `
+  <div class="ticket-color ${ticketColor}"></div>
+  <div class="ticket-id">id: #${id}</div>
+  <div class="task-area">${data}</div>
+  <div class="ticket-lock">
+      <i class="fa-solid fa-lock"></i>
+  </div>
+`;
+mainCont.appendChild(ticketCont);
+
+ //if ticket is being generated for the first time save it in local Storage
+   if(!ticketId) {
+    ticketsArr.push({
+    ticketId: id,
+    ticketColor,
+    ticketTask: data,
+  });
+    localStorage.setItem("tickets", JSON.stringify(ticketsArr));
+  }
+
+  
+}
