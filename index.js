@@ -81,3 +81,21 @@ if (localStorage.getItem("tickets")) {
       createTicket(ticketObj.ticketColor, ticketObj.ticketTask, ticketObj.ticketId)
     })
   }
+
+
+
+const allPriorityColor = document.querySelectorAll(".priority-color");
+// (3) modal container color selection 
+allPriorityColor.forEach(colorElement=>{
+  colorElement.addEventListener("click", function (){
+    // 2) remove all ho jayege previous vale
+    allPriorityColor.forEach(elem=>{
+      elem.classList.remove("active");
+    })
+    // 1 sbbhi active ho jayege || active one
+    colorElement.classList.add("active");
+    // 3) classList[0] idx pe color asign to modalPriorityColors
+    modalPriorityColors = colorElement.classList[0];
+    // console.log(colorElement.classList[0]);
+  })
+});
