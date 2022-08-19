@@ -128,3 +128,15 @@ body{
  .active{
     border: 4px solid red;
 }
+
+.fa-lock{
+    display:block;
+ }
+
+ .ticket-lock{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -29px;
+    margin-right: 11px;
+    font-size: 1.5rem;
+ }

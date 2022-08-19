@@ -68,8 +68,9 @@ mainCont.appendChild(ticketCont);
   });
     localStorage.setItem("tickets", JSON.stringify(ticketsArr));
   }
-
-  
+  handleRemoval(ticketCont, id);
+  handlePriorityColor(ticketCont, id);
+  handleLock(ticketCont, id);
 }
 
 
@@ -132,3 +133,115 @@ for (let i = 0; i < toolBoxColors.length; i++) {
     ticketsArr.forEach((ticket) => createTicket(ticket.ticketColor, ticket.ticketTask, ticket.ticketId))
   })
 }
+
+
+
+//toggling the remove btn 
+var isRemoveBtnActive = false;
+const removeBtn = document.querySelector(".fa-xmark");
+removeBtn.addEventListener("click", function () {
+  console.log("in btn");
+  //    case 1 -> if removeBtn is not active
+  //              then make it active i.e. red color
+  if (!isRemoveBtnActive) {
+    // display modal
+    console.log("inside not active");
+    removeBtn.style.color = "red";
+  }
+
+  // case 2 -> if removeBtn is active
+  //           then make it inactive i.e. white color
+  else if (isRemoveBtnActive) {
+    // display none
+    console.log("inside active");
+    removeBtn.style.color = "white";
+  }
+
+  isRemoveBtnActive = !isRemoveBtnActive;
+});
+//helps in removing the ticket from frontend and saving in localStorage
+function handleRemoval(ticketCont,id){
+  ticketCont.addEventListener("click", function () {
+    if (!isRemoveBtnActive) return;
+
+    //remove from ticketsArr
+    let idx = getTicketIdx(id);
+    console.log(idx);
+    ticketsArr.splice(idx, 1);
+    console.log(ticketsArr);
+    //set in local storage
+    localStorage.setItem("tickets", JSON.stringify(ticketsArr));
+    //remove from frontend
+    ticketCont.remove();
+  });
+}
+//retuns the index of ticket present in ticketsArr
+function getTicketIdx(id) { 
+    let idx = ticketsArr.findIndex(ticketObj => {
+      return ticketObj.ticketId==id
+    })
+    return idx;
+  }
+  
+
+
+//changing ticket priority color
+function handlePriorityColor(ticketCont, id){
+    let ticketColor = ticketCont.querySelector(".ticket-color");
+     // Implement addEventListener of type click in ticketColor
+     ticketColor.addEventListener("click", function (){
+      let currTicketColor = ticketColor.classList[1]; // lightpink 
+      let currTicketColorIdx = colors.indexOf(currTicketColor); // 0
+      let newTicketColorIdx = (currTicketColorIdx+1) % colors.length; //
+      
+      let newTicketColor = colors[newTicketColorIdx]; // lightgreen 
+  
+      ticketColor.classList.remove(currTicketColor); // lightpink class removed 
+      ticketColor.classList.add(newTicketColor); // lightgreen class added
+  
+      // update in localStorage
+      let idx = getTicketIdx(id);
+      // 1)update the newTicketcolor in ticketArr
+      ticketsArr[idx].ticketColor = newTicketColor;
+      // 2) set in local Storage
+      localStorage.setItem("tickets", JSON.stringify(ticketsArr));
+  
+     });
+  }  
+
+
+
+  let unlock = "fa-lock-open";
+  // handle Lock
+  function handleLock(ticketCont, id){
+    let ticketLock = ticketCont.querySelector(".ticket-lock");
+    let lock = ticketLock.children[0].classList[1];
+    let ticketTaskArea = ticketCont.querySelector(".task-area");
+  
+    ticketLock.addEventListener("click", function (){
+      if(ticketLock.children[0].classList.contains(lock)){
+        // remove lock class
+        ticketLock.children[0].classList.remove(lock);
+        // add lock class
+        ticketLock.children[0].classList.add(unlock);
+  
+        //make content editable
+        ticketTaskArea.setAttribute("contenteditable", "true");
+      }
+      else{
+        // add lock class
+        ticketLock.children[0].classList.add(lock);
+        // remove lock class
+        ticketLock.children[0].classList.remove(unlock);
+  
+        // make content non editable
+        ticketTaskArea.setAttribute("contenteditable", "false");
+      }
+  
+      // set Editable content in localStorage
+      let idx = getTicketIdx(id);
+      console.log(ticketTaskArea.textContent);
+      ticketsArr[idx].ticketTask = ticketTaskArea.textContent;
+      localStorage.setItem("tickets", JSON.stringify(ticketsArr));
+    });
+  }  
